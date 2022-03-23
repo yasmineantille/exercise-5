@@ -1,0 +1,77 @@
+/*
+   Application Hello World
+
+   Gradle build file for JaCaMo Application
+*/
+
+defaultTasks 'run'
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+
+version '0.9'
+group   'org.jacamo'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+
+    maven { url "https://raw.github.com/jacamo-lang/mvn-repo/master" }
+    maven { url 'https://jitpack.io' }
+    //maven { url "http://jacamo.sourceforge.net/maven2" }
+    //maven { url "https://jade.tilab.com/maven/" }
+    //flatDir {  dirs 'lib' }
+}
+
+dependencies {
+    implementation group: 'org.jacamo',     name: 'jacamo' ,   version: '0.9'
+    implementation 'com.github.Interactions-HSG:wot-td-java:v0.1.2'
+    implementation 'org.apache.httpcomponents.client5:httpclient5:5.0'
+    implementation 'org.apache.httpcomponents.client5:httpclient5-fluent:5.0'
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir 'src/env'
+            srcDir 'src/agt'
+            srcDir 'src/org'
+            srcDir 'src/int'
+            srcDir 'src/java'
+        }
+        resources {
+            srcDir 'src/resources'
+        }
+    }
+}
+
+task task1 (type: JavaExec, dependsOn: 'classes') {
+    description 'runs the application for task 1'
+    group ' JaCaMo'
+    main = 'jacamo.infra.JaCaMoLauncher'
+    args 'task1.jcm'
+    classpath sourceSets.main.runtimeClasspath
+}
+
+task task2 (type: JavaExec, dependsOn: 'classes') {
+    description  'runs the application for task 2'
+    group ' JaCaMo'
+    main = 'jacamo.infra.JaCaMoLauncher'
+    args 'task2.jcm'
+    classpath sourceSets.main.runtimeClasspath
+}
+
+task task3 (type: JavaExec, dependsOn: 'classes') {
+    description  'runs the application for task 3'
+    group ' JaCaMo'
+    main = 'jacamo.infra.JaCaMoLauncher'
+    args 'task3.jcm'
+    classpath sourceSets.main.runtimeClasspath
+}
+
+clean {
+    delete 'bin'
+    delete 'build'
+}

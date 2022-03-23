@@ -1,0 +1,28 @@
+/*
+  JaCaMo Project File
+  This file defines the initial state of the Multi-Agent System.
+  See here for more details: http://jacamo.sourceforge.net/doc/jcm.html.
+*/
+mas exercise5 {
+
+  /*
+    Configuration of the agent "detector".
+    The detector agent focuses on one artifact of the workspace "lab".
+  */
+  agent detector : detector.asl {
+
+    // Focus on the artifact detector1 of the workspace "lab"
+    focus : lab.detector1
+  }
+
+  /*
+    Configuration of the workspace "lab".
+    The workspace contains a Block Detector artifact that simulates the behavior
+    of a service that detects blocks within the lab.
+  */
+  workspace lab  {
+
+    // Make a BlockDetector artifact named detector1
+    artifact detector1 :sim.BlockDetector
+  }
+}
