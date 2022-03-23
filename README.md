@@ -12,7 +12,7 @@ A template for an application implemented with the [JaCaMo 0.9](http://jacamo.so
 ### Task 1
 Task 1 requires implementing (part of) a tutorial for programming four agents that will print different hello world messages. 
 
-Follow the instructions of the [Hello JaCaMo - Part II (agent)](http://jacamo.sourceforge.net/tutorial/hello-world/#part-ii-agent) tutorial. Update the files `sample_agent.asl` and  `task1.jcm` based on the instructions. 
+Follow the instructions of the [Hello JaCaMo - Part II (agent)](http://jacamo.sourceforge.net/tutorial/hello-world/#part-ii-agent) tutorial. Update the files [`sample_agent.asl`](https://github.com/HSG-WAS-SS22/exercise-5/blob/main/src/agt/sample_agent.asl) and  [`task1.jcm`](https://github.com/HSG-WAS-SS22/exercise-5/blob/main/task1.jcm) based on the instructions. 
 
 HINTS:
 - Run the Gradle task `task1` to observe the behavior of your implementation.
@@ -24,11 +24,11 @@ Task2 requires updating the program of a _detector_ agent for enabling it to inf
 A detector agent uses a simulated service `detector1` for detecting blocks whithin a **workspace** named "lab". Based on the notifications that the agent receives from the service, it constructs **beliefs** of the form `positioned(BlockName, X, Y, Z)[certainty(Cert)]`, e.g. `positioned("A", 100, 150, 0)[certainty(0.9)]`. Such a belief denotes that the agent believes that block "A" is positioned in (100, 150, 0) with a **degree of certainty** 0.9. Based on its beliefs, the agent follows Prolog-like **rules** to infer whether a block is positioned on top of another block, and whether a block is positioned on the table within the workspace.
 
 STEPS:
-- Step 1: Update the rule `on(Block1, Block2)` to enable the agent to infer whether a Block1 is detected to be positioned on top of a Block2.
-- Step 2: Update the rule `onTable(Block)` to enable the agent to infer whether a Block is detected to be positioned on the table.
+- Step 1: Update the rule [`on(Block1, Block2)`](https://github.com/HSG-WAS-SS22/exercise-5/blob/ba6d52c8d6352a1d9146ae824ca70f45f2b87f5a/src/agt/detector.asl#L30) to enable the agent to infer whether a Block1 is detected to be positioned on top of a Block2.
+- Step 2: Update the rule [`onTable(Block)`](https://github.com/HSG-WAS-SS22/exercise-5/blob/ba6d52c8d6352a1d9146ae824ca70f45f2b87f5a/src/agt/detector.asl#L45) to enable the agent to infer whether a Block is detected to be positioned on the table.
 
 HINTS:
-- Observe how the similar rule `clear(Block)` is implemented for inferring whether nothing is positioned on top of a Block. 
+- Observe how the similar rule [`clear(Block)`](https://github.com/HSG-WAS-SS22/exercise-5/blob/ba6d52c8d6352a1d9146ae824ca70f45f2b87f5a/src/agt/detector.asl#L10) is implemented for inferring whether nothing is positioned on top of a Block. 
 - For implementing the rules, take into consideration the degree of certainty of the agent's beliefs. The agent should not infer anything if any related belief has a degree of certainty < 0.5. 
 - Run the Gradle task `task2` to test your implementation.
 
@@ -51,15 +51,15 @@ Based on its beliefs about the state, the agent attempts to organize the blocks 
 After organizing the blocks, the agent prints its current beliefs that should have been updated based on the notifications of `detector1` and should correspond to the updated state of the world.
 
 STEPS:
-- Step 1: Register as a user to `leubot1`, so that the agent can use the robotic arm. Follow the instructions for acquiring an API key, and then update the agent's belief `apikey` accordingly. This belief is required for the agent to start (see plan `start`).
-- Step 2: Update the rules `on(Block1, Block2)` and `onTable(Block)` based on the work that you implemented in Task 2. These rules are useful for the agent to infer beliefs required for organizing the blocks. 
-- Step 3: Update the context and body of the agent's plan `organize(Block1, Block2, Block3)` to enable the agent to organize Block1, Block2, and Block3 based on the blocks-world problem. Use the agent's beliefs (e.g. beliefs inferred through the agent's rules) to implement the context of the plan. Use the plans `unstack(Block1, Block2)`, `pickUp(Block)`, `putDown(Block)`, and `stack(Block1, Block2)` to implement the plan based on sub-goals.
-- Step 4: Update the context and body of the agent's plan `putDown(Block)` to enable the agent to put a Block on the table by using `leubot1`.
-- Step 5: Update the context and body of the agent's plan `pickUp(Block)` to enable the agent to pick a Block from the table by using `leubot1`.
-- Step 6: Update the context and body of the agent's plan `stack(Block1, Block2)` to enable the agent to stack a Block1 on Block2 by using `leubot1`.
+- Step 1: Register as a user to `leubot1`, so that the agent can use the robotic arm. Follow the instructions for acquiring an API key, and then update the agent's belief [`apikey`](https://github.com/HSG-WAS-SS22/exercise-5/blob/9caea9056ebdc451a4f23bea0153cf8b360932d4/src/agt/mover.asl#L15) accordingly. This belief is required for the agent to start (see plan `start`).
+- Step 2: Update the rules [`on(Block1, Block2)`](https://github.com/HSG-WAS-SS22/exercise-5/blob/9caea9056ebdc451a4f23bea0153cf8b360932d4/src/agt/mover.asl#L44) and [`onTable(Block)`](https://github.com/HSG-WAS-SS22/exercise-5/blob/9caea9056ebdc451a4f23bea0153cf8b360932d4/src/agt/mover.asl#L59) based on the work that you implemented in Task 2. These rules are useful for the agent to infer beliefs required for organizing the blocks. 
+- Step 3: Update the context and body of the agent's plan [`organize(Block1, Block2, Block3)`](https://github.com/HSG-WAS-SS22/exercise-5/blob/9caea9056ebdc451a4f23bea0153cf8b360932d4/src/agt/mover.asl#L115) to enable the agent to organize Block1, Block2, and Block3 based on the blocks-world problem. Use the agent's beliefs (e.g. beliefs inferred through the agent's rules) to implement the context of the plan. Use the plans `unstack(Block1, Block2)`, `pickUp(Block)`, `putDown(Block)`, and `stack(Block1, Block2)` to implement the plan based on sub-goals.
+- Step 4: Update the context and body of the agent's plan [`putDown(Block)`](https://github.com/HSG-WAS-SS22/exercise-5/blob/9caea9056ebdc451a4f23bea0153cf8b360932d4/src/agt/mover.asl#L188) to enable the agent to put a Block on the table by using `leubot1`.
+- Step 5: Update the context and body of the agent's plan [`pickUp(Block)`](https://github.com/HSG-WAS-SS22/exercise-5/blob/9caea9056ebdc451a4f23bea0153cf8b360932d4/src/agt/mover.asl#L209) to enable the agent to pick a Block from the table by using `leubot1`.
+- Step 6: Update the context and body of the agent's plan [`stack(Block1, Block2)`](https://github.com/HSG-WAS-SS22/exercise-5/blob/9caea9056ebdc451a4f23bea0153cf8b360932d4/src/agt/mover.asl#L232) to enable the agent to stack a Block1 on Block2 by using `leubot1`.
 
 HINTS:
-- For implementing Tasks 4-6, observe how the similar plan `unstack(Block1, Block2)` is implemented for enabling the agent to ustack a Block1 from a Block2 by using `leubot1`. 
+- For implementing Tasks 4-6, observe how the similar plan [`unstack(Block1, Block2)`](https://github.com/HSG-WAS-SS22/exercise-5/blob/9caea9056ebdc451a4f23bea0153cf8b360932d4/src/agt/mover.asl#L159) is implemented for enabling the agent to ustack a Block1 from a Block2 by using `leubot1`. 
 - For implementing Tasks 3-6, avoid updating by yourselves any agent's beliefs that should be inferred through the agent's rules. Such beliefs should be automatically updated through the rules whenever `detector1` notifies the agent about a change in the state of the world. For example, avoid making a belief addition `+on(Block1,Block2)` on the plan body of `stack(Block1,Block2)`. Instead, concentrate on implementing a body that triggers the execution of existing plans (e.g. `!unstack(Block1, Block2)` etc. in Step 3, and `!move(X,Y,Z)`, `!release` etc. in Steps 3-6), and that updates the agent's beliefs about `leubot1` (e.g. `gripperEmpty` etc.).
 - Run the Gradle task `task3` to observe the behavior of your implementation.
 
