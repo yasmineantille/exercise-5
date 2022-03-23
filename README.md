@@ -35,7 +35,7 @@ HINTS:
 ### Task 3
 Task3 requires updating the program of a _mover_ agent for planning the solution of the **blocks-world** problem in the lab workspace. 
 
-A mover agent is uses the following:
+A mover agent uses the following:
 - A simulated service `detector1` for detecting blocks whithin the lab workspace.
 - A robotic arm `leubot1` for moving blocks within the lab workspace.
 
