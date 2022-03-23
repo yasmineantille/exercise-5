@@ -18,7 +18,7 @@ gripperEmpty.
   You can register manually and acquire and API key, by executing the script:
 */
   // Uncomment the following and add your API key
-  apikey("YOUR_API_KEY").
+  //apikey("YOUR_API_KEY").
 
 
 /*
