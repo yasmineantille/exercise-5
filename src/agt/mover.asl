@@ -237,7 +237,7 @@ onTable(Block) :- true.
   Context:
   - leubot1 holds Block1
   - Block2 has nothing on top
-  - Block2 has coordinates (X1, Y1, Z1) with degree of certainty >= 0.5
+  - Block2 has coordinates (X2, Y2, Z2) with degree of certainty >= 0.5
   Body:
   - leubot1 moves to (X2, Y2, Z2)
   - leubot1 releases
