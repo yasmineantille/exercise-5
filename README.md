@@ -15,7 +15,7 @@ Task 1 requires implementing (part of) a tutorial for programming four agents th
 Follow the instructions of the [Hello JaCaMo - Part II (agent)](http://jacamo.sourceforge.net/tutorial/hello-world/#part-ii-agent) tutorial. Update the files [`sample_agent.asl`](https://github.com/HSG-WAS-SS22/exercise-5/blob/main/src/agt/sample_agent.asl) and  [`task1.jcm`](https://github.com/HSG-WAS-SS22/exercise-5/blob/main/task1.jcm) based on the instructions. 
 
 HINTS:
-- Run the Gradle task `task1` to observe the behavior of your implementation.
+- Run the Gradle task `task1` based on the [instructions](#how-to-run-the-project) to observe the behavior of your implementation.
 
 
 ### Task 2
@@ -30,7 +30,7 @@ STEPS:
 HINTS:
 - Observe how the similar rule [`clear(Block)`](https://github.com/HSG-WAS-SS22/exercise-5/blob/ba6d52c8d6352a1d9146ae824ca70f45f2b87f5a/src/agt/detector.asl#L10) is implemented for inferring whether nothing is positioned on top of a Block. 
 - For implementing the rules, take into consideration the degree of certainty of the agent's beliefs. The agent should not infer anything if any related belief has a degree of certainty < 0.5. 
-- Run the Gradle task `task2` to test your implementation.
+- Run the Gradle task `task2` based on the [instructions](#how-to-run-the-project) to test your implementation.
 
 ### Task 3
 Task3 requires updating the program of a _mover_ agent for planning the solution of the **blocks-world** problem in the lab workspace. 
@@ -61,7 +61,7 @@ STEPS:
 HINTS:
 - For implementing Tasks 4-6, observe how the similar plan [`unstack(Block1, Block2)`](https://github.com/HSG-WAS-SS22/exercise-5/blob/9caea9056ebdc451a4f23bea0153cf8b360932d4/src/agt/mover.asl#L159) is implemented for enabling the agent to ustack a Block1 from a Block2 by using `leubot1`. 
 - For implementing Tasks 3-6, avoid updating by yourselves any agent's beliefs that should be inferred through the agent's rules. Such beliefs should be automatically updated through the rules whenever `detector1` notifies the agent about a change in the state of the world. For example, avoid making a belief addition `+on(Block1,Block2)` on the plan body of `stack(Block1,Block2)`. Instead, concentrate on implementing a body that triggers the execution of existing plans (e.g. `!unstack(Block1, Block2)` etc. in Step 3, and `!move(X,Y,Z)`, `!release` etc. in Steps 3-6), and that updates the agent's beliefs about `leubot1` (e.g. `gripperEmpty` etc.).
-- Run the Gradle task `task3` to observe the behavior of your implementation.
+- Run the Gradle task `task3` based on the [instructions](#how-to-run-the-project) to observe the behavior of your implementation.
 
 
 ### Register as a user to leubot1
