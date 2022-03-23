@@ -88,6 +88,8 @@ HTTP/1.1 201 Created
 ```
 Here, `047820620ee091c7301b3fceed54d918` is the valid API key.
 
+The W3C Web of Things Thing Description of leubot1 is available [here](https://raw.githubusercontent.com/Interactions-HSG/example-tds/main/tds/leubot1.ttl).
+
 ### Programming JaCaMo applications in Atom
 The [Atom editor](https://atom.io/) supports syntax highlighting for programming JaCaMo applications. Suggested packages:
 - [language-agentspeak](https://atom.io/packages/language-agentspeak): syntax highlighting for agent files (.asl) with the AgentSpeak language [1].
