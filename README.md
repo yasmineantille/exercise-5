@@ -51,7 +51,7 @@ Based on its beliefs about the state, the agent attempts to organize the blocks 
 After organizing the blocks, the agent prints its current beliefs that should have been updated based on the notifications of `detector1` and should correspond to the updated state of the world.
 
 STEPS:
-- Step 1: Register as a user to `leubot1`, so that the agent can use the robotic arm. Follow the instructions for acquiring an API key, and then update the agent's belief [`apikey`](https://github.com/HSG-WAS-SS22/exercise-5/blob/9caea9056ebdc451a4f23bea0153cf8b360932d4/src/agt/mover.asl#L15) accordingly. This belief is required for the agent to start (see plan `start`).
+- Step 1: Register as a user to `leubot1`, so that the agent can use the robotic arm. Follow the instructions for acquiring an API key, and then update the agent's belief [`apikey`](https://github.com/HSG-WAS-SS22/exercise-5/blob/9caea9056ebdc451a4f23bea0153cf8b360932d4/src/agt/mover.asl#L15) accordingly. Alternatively, if you are running the application on dry run (i.e. without executing the requests to `leubot1`), simply uncomment the existing belief. This belief is required for the agent to start (see plan `start`). 
 - Step 2: Update the rules [`on(Block1, Block2)`](https://github.com/HSG-WAS-SS22/exercise-5/blob/9caea9056ebdc451a4f23bea0153cf8b360932d4/src/agt/mover.asl#L44) and [`onTable(Block)`](https://github.com/HSG-WAS-SS22/exercise-5/blob/9caea9056ebdc451a4f23bea0153cf8b360932d4/src/agt/mover.asl#L59) based on the work that you implemented in Task 2. These rules are useful for the agent to infer beliefs required for organizing the blocks. 
 - Step 3: Update the context and body of the agent's plan [`organize(Block1, Block2, Block3)`](https://github.com/HSG-WAS-SS22/exercise-5/blob/9caea9056ebdc451a4f23bea0153cf8b360932d4/src/agt/mover.asl#L115) to enable the agent to organize Block1, Block2, and Block3 based on the blocks-world problem. Use the agent's beliefs (e.g. beliefs inferred through the agent's rules) to implement the context of the plan. Use the plans `unstack(Block1, Block2)`, `pickUp(Block)`, `putDown(Block)`, and `stack(Block1, Block2)` to implement the plan based on sub-goals.
 - Step 4: Update the context and body of the agent's plan [`putDown(Block)`](https://github.com/HSG-WAS-SS22/exercise-5/blob/9caea9056ebdc451a4f23bea0153cf8b360932d4/src/agt/mover.asl#L188) to enable the agent to put a Block on the table by using `leubot1`.
@@ -61,7 +61,7 @@ STEPS:
 HINTS:
 - For implementing Tasks 4-6, observe how the similar plan [`unstack(Block1, Block2)`](https://github.com/HSG-WAS-SS22/exercise-5/blob/9caea9056ebdc451a4f23bea0153cf8b360932d4/src/agt/mover.asl#L159) is implemented for enabling the agent to ustack a Block1 from a Block2 by using `leubot1`. 
 - For implementing Tasks 3-6, avoid updating by yourselves any agent's beliefs that should be inferred through the agent's rules. Such beliefs should be automatically updated through the rules whenever `detector1` notifies the agent about a change in the state of the world. For example, avoid making a belief addition `+on(Block1,Block2)` on the plan body of `stack(Block1,Block2)`. Instead, concentrate on implementing a body that triggers the execution of existing plans (e.g. `!unstack(Block1, Block2)` etc. in Step 3, and `!move(X,Y,Z)`, `!release` etc. in Steps 3-6), and that updates the agent's beliefs about `leubot1` (e.g. `gripperEmpty` etc.).
-- Run the Gradle task `task3` based on the [instructions](#how-to-run-the-project) to observe the behavior of your implementation.
+- Run the Gradle task `task3` or `task3dryrun` based on the [instructions](#how-to-run-the-project) to observe the behavior of your implementation.
 
 
 ### Register as a user to leubot1
@@ -113,9 +113,13 @@ For Task 2:
 ```shell
 ./gradlew task2
 ```
-For Task 3:
+For Task 3 by printing and executing the requests to leubot1):
 ```shell
 ./gradlew task3
+```
+For Task 3 by only printing the requests to leubot1):
+```shell
+./gradlew task3dryrun
 ```
 
 
