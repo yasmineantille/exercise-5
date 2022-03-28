@@ -284,7 +284,7 @@ onTable(Block) :-
   //true // update the context
   holding(Block1) &
   clear(Block2) &
-  positioned(Block2, X1, Y1, Z1)[certainty(Cert)] & Cert >= 0.5
+  positioned(Block2, X2, Y2, Z2)[certainty(Cert)] & Cert >= 0.5
 <-
   .print("Stact ", Block1, " on ", Block2); // update the body
   !moveTo(X2, Y2, Z2);
