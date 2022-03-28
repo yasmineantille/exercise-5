@@ -20,7 +20,8 @@ gripperEmpty.
   // Uncomment the following and add your API key
   // Notice: If you are running task task3dryrun, simply uncomment the belief
   //         so that the agent is able to start
-  //apikey("YOUR_API_KEY").
+  apikey("YOUR_API_KEY").
+  // apikey("349cf6453d0456589bdf0f5ab18909c6").
 
 
 /*
@@ -55,7 +56,12 @@ clear(Block1) :-
   - Y1 = Y2
   - Z1-Z2 = Height
 */
-on(Block1, Block2) :- true.
+on(Block1, Block2) :-
+  positioned(Block1, X1, Y1, Z1)[certainty(Cert1)] & Cert1 >= 0.5 &
+  positioned(Block2, X2, Y2, Z2)[certainty(Cert2)] & Cert2 >= 0.5 &
+  blockHeight(Height) &
+  X1 == X2 & Y1 == Y2 &
+  Z1-Z2 == Height.
 
 
 /*
@@ -66,7 +72,8 @@ on(Block1, Block2) :- true.
   - Block has coordinates (X, Y, Z) with degree of certainty >= 0.5
   - Z = 0
 */
-onTable(Block) :- true.
+onTable(Block) :-
+  positioned(Block, X, Y, Z)[certainty(Cert)] & Cert >= 0.5 & Z == 0.
 
 
 /* Initial goals */
@@ -132,7 +139,13 @@ onTable(Block) :- true.
     Block2 on top of Block 3, and Block3 on top of the table.
 */
 +!organize(Block1, Block2, Block3) :
-  true // update the context
+  // true // update the context
+  clear(Block2) &
+  clear(Block3) &
+  onTable(Block1) &
+  onTable(Block2) &
+  on(Block3, Block1) &
+  gripperEmpty
 <-
   .print("Organizing.");
   /* update the body for solving the blocks-world problem
@@ -142,6 +155,12 @@ onTable(Block) :- true.
            - putDown(Block)
            - stack(Block1, Block2)
   */
+  !unstack(Block3, Block1);
+  !putDown(Block3);
+  !pickUp(Block2);
+  !stack(Block2, Block3);
+  !pickUp(Block1);
+  !stack(Block1, Block2);
 .
 
 /*
@@ -203,9 +222,15 @@ onTable(Block) :- true.
   - The gripper is empty
 */
 +!putDown(Block) :
-  true // update the context
+  // true // update the context
+  emptyPosition(X, Y, Z)[certainty(Cert)] & Cert >= 0.5 &
+  holding(Block)
 <-
   .print("Put ", Block, " on the table"); // update the body
+  !moveTo(X, Y, Z);
+  !release;
+  -holding(Block);
+  +gripperEmpty;
 .
 
 
@@ -226,9 +251,17 @@ onTable(Block) :- true.
   - The gripper is not empty
 */
 +!pickUp(Block) :
-  true // update the context
+  //true // update the context
+  clear(Block) &
+  onTable(Block) &
+  gripperEmpty &
+  positioned(Block, X, Y, Z)[certainty(Cert)] & Cert >= 0.5
 <-
   .print("Pick ", Block, " from the table"); // update the body
+  !moveTo(X, Y, Z);
+  !grasp;
+  +holding(Block);
+  -gripperEmpty;
 .
 
 
@@ -248,9 +281,16 @@ onTable(Block) :- true.
   - The gripper is empty
 */
 +!stack(Block1, Block2) :
-  true // update the context
+  //true // update the context
+  holding(Block1) &
+  clear(Block2) &
+  positioned(Block2, X1, Y1, Z1)[certainty(Cert)] & Cert >= 0.5
 <-
   .print("Stact ", Block1, " on ", Block2); // update the body
+  !moveTo(X2, Y2, Z2);
+  !release;
+  -holding(Block1);
+  +gripperEmpty;
 .
 
 /***********Plans for interacting with leubot1***********/
