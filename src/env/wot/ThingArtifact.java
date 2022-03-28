@@ -211,7 +211,7 @@ public class ThingArtifact extends Artifact {
       Optional<TDHttpResponse> response = executeRequest(TD.invokeAction, form.get(), inputSchema,
           payloadTags, payload);
 
-      if (response.isPresent() && requestSucceeded(response.get().getStatusCode())) {
+      if (this.dryRun || (response.isPresent() && requestSucceeded(response.get().getStatusCode()))) {
         if ("https://ci.mines-stetienne.fr/kg/ontology#SetBase".equals(actionTag)){
           Integer degrees = payload[0] instanceof Integer ? (int) payload[0] : 0;
           if (displacements.containsKey(degrees)) {

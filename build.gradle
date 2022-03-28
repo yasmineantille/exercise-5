@@ -71,6 +71,14 @@ task task3 (type: JavaExec, dependsOn: 'classes') {
     classpath sourceSets.main.runtimeClasspath
 }
 
+task task3dryrun (type: JavaExec, dependsOn: 'classes') {
+    description  'runs the application for task 3'
+    group ' JaCaMo'
+    main = 'jacamo.infra.JaCaMoLauncher'
+    args 'task3-dryrun.jcm'
+    classpath sourceSets.main.runtimeClasspath
+}
+
 clean {
     delete 'bin'
     delete 'build'

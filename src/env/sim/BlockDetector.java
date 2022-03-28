@@ -12,7 +12,7 @@ private int simCounter = 0;
 private State state = State.NEUTRAL;
 private Map<Block, Double> detections = new HashMap();
 private final Block blockA = new Block("A", 100, 150, 0);
-private final Block blockB = new Block("B", 150, 100, 0);
+private final Block blockB = new Block("B", 200, 150, 0);
 private final Block blockC = new Block("C", 100, 150, 5);
 
 
@@ -22,7 +22,7 @@ private enum State {
     PIKCUP_LOCATION,
     PLACE_LOCATION;
 
-    static Block blockOfInterest = null;
+    static Block upperBlock = null;
   }
 
   @OPERATION
@@ -60,28 +60,29 @@ private enum State {
           possibleMoves.add(block);
         }
     }
-    Optional<Block> upperBlock = possibleMoves.stream().max(Comparator
+    Optional<Block> boi = possibleMoves.stream().max(Comparator
       .comparing(Block::getZ));
-    if (upperBlock.isPresent() && this.state == State.NEUTRAL) {
-      this.state = State.PIKCUP_LOCATION;
-      State.blockOfInterest = upperBlock.get();
-      //if ("C".equals(upperBlock.get().getName())) {
-      //  simulateExternalIntervention();
-      //}
+    if (this.state == State.NEUTRAL) {
+      if (boi.isPresent()) {
+        this.state = State.PIKCUP_LOCATION;
+        State.upperBlock = boi.get();
+        System.out.println("Block to picked up: "+ boi.get().getName());
+      } else {
+        State.upperBlock = null;
+        System.out.println("No block underneath ");
+      }
     }
-    else if (upperBlock.isPresent() && this.state == State.PIKCUP_LOCATION) {
+    else if (this.state == State.PIKCUP_LOCATION) {
       this.state = State.PLACE_LOCATION;
-      Block boi = State.blockOfInterest;
-      int newZ = upperBlock.get().getZ() + 5;
-      boi.updateLocation(coordinates.get(0), coordinates.get(1), newZ);
-      signal("positioned", boi.getName(), boi.getX(), boi.getY(), boi.getZ(), 0.9);
-      this.state = State.NEUTRAL;
-    }
-    else if (!upperBlock.isPresent() && this.state == State.PIKCUP_LOCATION) {
-      this.state = State.PLACE_LOCATION;
-      Block boi = State.blockOfInterest;
-      boi.updateLocation(coordinates.get(0), coordinates.get(1), 0);
-      signal("positioned", boi.getName(), boi.getX(), boi.getY(), 0, 0.9);
+      int newZ = 0;
+      if (boi.isPresent()){
+        newZ = boi.get().getZ() + 5;
+        System.out.println("Block to be placed on: "+ boi.get().getName());
+      } else {
+        System.out.println("To be placed on table");
+      }
+      State.upperBlock.updateLocation(coordinates.get(0), coordinates.get(1), newZ);
+      signal("positioned", State.upperBlock.getName(), State.upperBlock.getX(), State.upperBlock.getY(), State.upperBlock.getZ(), 0.9);
       this.state = State.NEUTRAL;
     }
   }

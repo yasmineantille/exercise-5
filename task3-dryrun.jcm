@@ -1,0 +1,46 @@
+/*
+  JaCaMo Project File
+  This file defines the initial state of the Multi-Agent System.
+  See here for more details: http://jacamo.sourceforge.net/doc/jcm.html.
+*/
+mas exercise5 {
+
+  /*
+    Configuration of the agent "mover".
+    The mover agent focuses on two artifacts of the workspace "lab".
+  */
+  agent mover : mover.asl {
+    /*
+      Adds a belief about the API key needed for interacting with Leubot1
+      After registering manually, update the belief to hold a valid API key
+      E.g. beliefs : apikey("425a76e942caeaf5ca6b1bdc62a3c023")
+      You can register manually, by executing the script:
+    */
+    // Uncomment the following to add the belief about the API key
+    //beliefs : apikey("cfb576bb19ab741fc548cf5665a41f33")
+
+    // Focus on the artifact detector1 of the workspace "lab"
+    focus : lab.detector1
+
+    // Focus on the artifact leubot1 of the workspace "lab"
+    focus : lab.leubot1
+  }
+
+  /*
+    Configuration of the workspace "lab".
+    The workspace contains two artifacts:
+    1) A Block Detector that simulates the behavior of a service that detects
+      blocks within the lab.
+    2) A Thing Artifact for interacting with a robotic arm based on the W3C Web
+      of Things Thing Description that is available here:
+      https://raw.githubusercontent.com/Interactions-HSG/example-tds/main/tds/leubot1.ttl.
+  */
+  workspace lab  {
+
+    // Make a BlockDetector artifact named detector1
+    artifact detector1 :sim.BlockDetector
+
+    // Make a ThingArtifact artifact named leubot1
+    artifact leubot1 : wot.ThingArtifact("https://raw.githubusercontent.com/Interactions-HSG/example-tds/main/tds/leubot1.ttl", "true")
+  }
+}

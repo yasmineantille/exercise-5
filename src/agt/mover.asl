@@ -14,10 +14,12 @@ gripperEmpty.
 
 /*
   TASK 3 - STEP 1 Add an initial belief apikey() with your API key (as a string)
-  for interacting with leubot1
+  for interacting with leubot1.
   You can register manually and acquire and API key, by executing the script:
 */
   // Uncomment the following and add your API key
+  // Notice: If you are running task task3dryrun, simply uncomment the belief
+  //         so that the agent is able to start
   //apikey("YOUR_API_KEY").
 
 
@@ -108,6 +110,7 @@ onTable(Block) :- true.
 -!start <-
   .print("An API key is required for the agent to start.");
   .print("Revisit Task 3 - Step 1 to add a belief with a necessary API key.");
+  .print("Simply uncomment the apikey belief if you are on dry run.");
 .
 
 /***********Plans for resolving the blocks-world problem***********/
@@ -237,7 +240,7 @@ onTable(Block) :- true.
   Context:
   - leubot1 holds Block1
   - Block2 has nothing on top
-  - Block2 has coordinates (X1, Y1, Z1) with degree of certainty >= 0.5
+  - Block2 has coordinates (X2, Y2, Z2) with degree of certainty >= 0.5
   Body:
   - leubot1 moves to (X2, Y2, Z2)
   - leubot1 releases

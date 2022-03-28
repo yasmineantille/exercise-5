@@ -15,7 +15,7 @@ Task 1 requires implementing (part of) a tutorial for programming four agents th
 Follow the instructions of the [Hello JaCaMo - Part II (agent)](http://jacamo.sourceforge.net/tutorial/hello-world/#part-ii-agent) tutorial. Update the files [`sample_agent.asl`](https://github.com/HSG-WAS-SS22/exercise-5/blob/main/src/agt/sample_agent.asl) and  [`task1.jcm`](https://github.com/HSG-WAS-SS22/exercise-5/blob/main/task1.jcm) based on the instructions. 
 
 HINTS:
-- Run the Gradle task `task1` to observe the behavior of your implementation.
+- Run the Gradle task `task1` based on the [instructions](#how-to-run-the-project) to observe the behavior of your implementation.
 
 
 ### Task 2
@@ -30,12 +30,12 @@ STEPS:
 HINTS:
 - Observe how the similar rule [`clear(Block)`](https://github.com/HSG-WAS-SS22/exercise-5/blob/ba6d52c8d6352a1d9146ae824ca70f45f2b87f5a/src/agt/detector.asl#L10) is implemented for inferring whether nothing is positioned on top of a Block. 
 - For implementing the rules, take into consideration the degree of certainty of the agent's beliefs. The agent should not infer anything if any related belief has a degree of certainty < 0.5. 
-- Run the Gradle task `task2` to test your implementation.
+- Run the Gradle task `task2` based on the [instructions](#how-to-run-the-project) to test your implementation.
 
 ### Task 3
 Task3 requires updating the program of a _mover_ agent for planning the solution of the **blocks-world** problem in the lab workspace. 
 
-A mover agent is uses the following:
+A mover agent uses the following:
 - A simulated service `detector1` for detecting blocks whithin the lab workspace.
 - A robotic arm `leubot1` for moving blocks within the lab workspace.
 
@@ -51,7 +51,7 @@ Based on its beliefs about the state, the agent attempts to organize the blocks 
 After organizing the blocks, the agent prints its current beliefs that should have been updated based on the notifications of `detector1` and should correspond to the updated state of the world.
 
 STEPS:
-- Step 1: Register as a user to `leubot1`, so that the agent can use the robotic arm. Follow the instructions for acquiring an API key, and then update the agent's belief [`apikey`](https://github.com/HSG-WAS-SS22/exercise-5/blob/9caea9056ebdc451a4f23bea0153cf8b360932d4/src/agt/mover.asl#L15) accordingly. This belief is required for the agent to start (see plan `start`).
+- Step 1: Register as a user to `leubot1`, so that the agent can use the robotic arm. Follow the instructions for acquiring an API key, and then update the agent's belief [`apikey`](https://github.com/HSG-WAS-SS22/exercise-5/blob/9caea9056ebdc451a4f23bea0153cf8b360932d4/src/agt/mover.asl#L15) accordingly. Alternatively, if you are running the application on dry run (i.e. without executing the requests to `leubot1`), simply uncomment the existing belief. This belief is required for the agent to start (see plan `start`). 
 - Step 2: Update the rules [`on(Block1, Block2)`](https://github.com/HSG-WAS-SS22/exercise-5/blob/9caea9056ebdc451a4f23bea0153cf8b360932d4/src/agt/mover.asl#L44) and [`onTable(Block)`](https://github.com/HSG-WAS-SS22/exercise-5/blob/9caea9056ebdc451a4f23bea0153cf8b360932d4/src/agt/mover.asl#L59) based on the work that you implemented in Task 2. These rules are useful for the agent to infer beliefs required for organizing the blocks. 
 - Step 3: Update the context and body of the agent's plan [`organize(Block1, Block2, Block3)`](https://github.com/HSG-WAS-SS22/exercise-5/blob/9caea9056ebdc451a4f23bea0153cf8b360932d4/src/agt/mover.asl#L115) to enable the agent to organize Block1, Block2, and Block3 based on the blocks-world problem. Use the agent's beliefs (e.g. beliefs inferred through the agent's rules) to implement the context of the plan. Use the plans `unstack(Block1, Block2)`, `pickUp(Block)`, `putDown(Block)`, and `stack(Block1, Block2)` to implement the plan based on sub-goals.
 - Step 4: Update the context and body of the agent's plan [`putDown(Block)`](https://github.com/HSG-WAS-SS22/exercise-5/blob/9caea9056ebdc451a4f23bea0153cf8b360932d4/src/agt/mover.asl#L188) to enable the agent to put a Block on the table by using `leubot1`.
@@ -61,7 +61,7 @@ STEPS:
 HINTS:
 - For implementing Tasks 4-6, observe how the similar plan [`unstack(Block1, Block2)`](https://github.com/HSG-WAS-SS22/exercise-5/blob/9caea9056ebdc451a4f23bea0153cf8b360932d4/src/agt/mover.asl#L159) is implemented for enabling the agent to ustack a Block1 from a Block2 by using `leubot1`. 
 - For implementing Tasks 3-6, avoid updating by yourselves any agent's beliefs that should be inferred through the agent's rules. Such beliefs should be automatically updated through the rules whenever `detector1` notifies the agent about a change in the state of the world. For example, avoid making a belief addition `+on(Block1,Block2)` on the plan body of `stack(Block1,Block2)`. Instead, concentrate on implementing a body that triggers the execution of existing plans (e.g. `!unstack(Block1, Block2)` etc. in Step 3, and `!move(X,Y,Z)`, `!release` etc. in Steps 3-6), and that updates the agent's beliefs about `leubot1` (e.g. `gripperEmpty` etc.).
-- Run the Gradle task `task3` to observe the behavior of your implementation.
+- Run the Gradle task `task3` or `task3dryrun` based on the [instructions](#how-to-run-the-project) to observe the behavior of your implementation.
 
 
 ### Register as a user to leubot1
@@ -88,6 +88,8 @@ HTTP/1.1 201 Created
 ```
 Here, `047820620ee091c7301b3fceed54d918` is the valid API key.
 
+The W3C Web of Things Thing Description of leubot1 is available [here](https://raw.githubusercontent.com/Interactions-HSG/example-tds/main/tds/leubot1.ttl).
+
 ### Programming JaCaMo applications in Atom
 The [Atom editor](https://atom.io/) supports syntax highlighting for programming JaCaMo applications. Suggested packages:
 - [language-agentspeak](https://atom.io/packages/language-agentspeak): syntax highlighting for agent files (.asl) with the AgentSpeak language [1].
@@ -111,9 +113,13 @@ For Task 2:
 ```shell
 ./gradlew task2
 ```
-For Task 3:
+For Task 3 by printing and executing the requests to leubot1):
 ```shell
 ./gradlew task3
+```
+For Task 3 by only printing the requests to leubot1):
+```shell
+./gradlew task3dryrun
 ```
 
 
