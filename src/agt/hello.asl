@@ -7,23 +7,12 @@
 
 !start.
 
-+!start
-<-
-  .print("This is a sample agent.");
-  .print("Update the agent and the file task1.jcm based on the instructions of Task 1.");
-.
+/* Plans */
 
-
-
-
-
-
-
-
-
-
-
++!start : message(X) <- .print(X).
++!start              <- .print("Hello World").
 
 // Include additional agent behavior
 { include("$jacamoJar/templates/common-cartago.asl") }
-{ include("$jacamoJar/templates/org-obedient.asl") }
+{ include("$jacamoJar/templates/common-moise.asl") }
+{ include("$moiseJar/asl/org-obedient.asl") }
