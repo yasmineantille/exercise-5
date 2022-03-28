@@ -39,7 +39,12 @@ clear(Block1) :-
   - Y1 = Y2
   - Z1-Z2 = Height
 */
-on(Block1, Block2) :- true.
+on(Block1, Block2) :-
+  positioned(Block1, X1, Y1, Z1)[certainty(Cert1)] & Cert1 >= 0.5 &
+  positioned(Block2, X2, Y2, Z2)[certainty(Cert2)] & Cert2 >= 0.5 &
+  blockHeight(Height) &
+  X1 == X2 & Y1 == Y2 &
+  Z1-Z2 == Height.
 
 
 /*
@@ -50,7 +55,9 @@ on(Block1, Block2) :- true.
   - Block has coordinates (X, Y, Z) with degree of certainty >= 0.5
   - Z = 0
 */
-onTable(Block) :- true.
+onTable(Block) :-
+  positioned(Block, X, Y, Z)[certainty(Cert)] & Cert >= 0.5 &
+  Z == 0.
 
 
 /* Initial goals */
